@@ -232,6 +232,15 @@ v0.1.1 with a zip on GitHub, and deployed it to production.*
 - Answered a few yes/no questions (license, repo name, parcel size, "do it all at once").
 - Logged into GitHub and WordPress in the browser when asked.
 
+## Credit where credit is due
+
+The outhouse remark above was made in the heat of the moment, before the project was finished. In the end:
+
+- **Omniva** has a genuinely good developer site, [developer.omniva.ee](https://developer.omniva.ee/), with an
+  OpenAPI spec. You can't create API credentials yourself, though: they come from Omniva business support.
+- **SmartPosti** does let you create the API key yourself, in business self-service (Settings, account owner
+  only). It is just very well hidden behind terrible UX, and the "machine-readable" documentation is a PDF.
+
 ## What is still unproven
 
 The plugin hasn't shipped a real parcel yet; the first real order will be the test. See
