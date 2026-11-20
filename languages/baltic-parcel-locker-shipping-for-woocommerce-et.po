@@ -1,0 +1,168 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Baltic Parcel Locker Shipping 0.1.0\n"
+"Language: et\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Domain: baltic-parcel-locker-shipping-for-woocommerce\n"
+
+msgid "Parcel"
+msgstr "Pakk"
+
+msgid "Barcode"
+msgstr "Ribakood"
+
+msgid "Door code"
+msgstr "Uksekood"
+
+msgid "Print label"
+msgstr "Prindi pakikaart"
+
+msgid "Legacy SmartPost order: terminal ID is not compatible, create the shipment in SmartPosti self-service."
+msgstr "Vana SmartPosti tellimus: pakiautomaadi ID ei ühildu, loo saadetis SmartPosti iseteeninduses."
+
+msgid "Not a parcel machine order."
+msgstr "Pole pakiautomaadi tellimus."
+
+msgid "Shipment status is unknown (the carrier did not answer clearly). Check carrier self-service before creating it again."
+msgstr "Saadetise olek on teadmata (vedaja ei vastanud selgelt). Kontrolli vedaja iseteenindust enne uuesti loomist."
+
+msgid "Release only if the shipment does NOT exist at the carrier. Continue?"
+msgstr "Vabasta ainult siis, kui saadetist vedaja juures EI OLE. Jätkan?"
+
+msgid "Release lock"
+msgstr "Vabasta lukk"
+
+msgid "Shipment is being created…"
+msgstr "Saadetist luuakse…"
+
+msgid "Create shipment"
+msgstr "Loo saadetis"
+
+msgid "Not allowed."
+msgstr "Pole lubatud."
+
+msgid "Order not found."
+msgstr "Tellimust ei leitud."
+
+msgid "Nothing to create: shipment exists or order has no parcel machine."
+msgstr "Pole midagi luua: saadetis on olemas või tellimusel pole pakiautomaati."
+
+msgid "Shipment creation is already in progress or its status is unknown."
+msgstr "Saadetise loomine on juba pooleli või selle olek on teadmata."
+
+msgid "%1$s shipment created: %2$s"
+msgstr "%1$s saadetis loodud: %2$s"
+
+msgid ", door code %s"
+msgstr ", uksekood %s"
+
+msgid "%1$s shipment %2$s: %3$s"
+msgstr "%1$s saadetis %2$s: %3$s"
+
+msgid "failed"
+msgstr "ebaõnnestus"
+
+msgid "status unknown"
+msgstr "olek teadmata"
+
+msgid "Lock released manually."
+msgstr "Lukk vabastati käsitsi."
+
+msgid "Shipment lock released manually."
+msgstr "Saadetise lukk vabastati käsitsi."
+
+msgid "Lock released."
+msgstr "Lukk vabastatud."
+
+msgid "No shipment for this order."
+msgstr "Sellel tellimusel pole saadetist."
+
+msgid "Label request failed (HTTP %1$d): %2$s"
+msgstr "Pakikaardi päring ebaõnnestus (HTTP %1$d): %2$s"
+
+msgid "Baltic Parcel Locker Shipping"
+msgstr "Baltic Parcel Locker Shipping"
+
+msgid "Environment"
+msgstr "Keskkond"
+
+msgid "Username"
+msgstr "Kasutajanimi"
+
+msgid "Password"
+msgstr "Parool"
+
+msgid "Customer code"
+msgstr "Kliendikood"
+
+msgid "Registration SMS"
+msgstr "Registreerimise SMS"
+
+msgid "Send a registration SMS to the sender (pakikood? — unverified)"
+msgstr "Saada saatjale registreerimise SMS (pakikood? — kontrollimata)"
+
+msgid "API key"
+msgstr "API võti"
+
+msgid "Request a sender door code (the service must be activated in SmartPosti self-service)"
+msgstr "Küsi saatja uksekoodi (teenus peab olema SmartPosti iseteeninduses aktiveeritud)"
+
+msgid "Default parcel size"
+msgstr "Vaikimisi paki suurus"
+
+msgid "Sender"
+msgstr "Saatja"
+
+msgid "Name"
+msgstr "Nimi"
+
+msgid "Mobile phone"
+msgstr "Mobiiltelefon"
+
+msgid "E-mail"
+msgstr "E-post"
+
+msgid "Street"
+msgstr "Tänav"
+
+msgid "City"
+msgstr "Linn"
+
+msgid "Postcode"
+msgstr "Postiindeks"
+
+msgid "saved — leave blank to keep"
+msgstr "salvestatud — jäta tühjaks, et säilitada"
+
+msgid "Baltic Parcel Locker Shipping: stored carrier credentials cannot be decrypted (salts or key changed). Please re-enter them."
+msgstr "Baltic Parcel Locker Shipping: salvestatud vedajate ligipääsuandmeid ei õnnestu dekrüpteerida (soolad või võti muutusid). Palun sisesta need uuesti."
+
+msgid "Title"
+msgstr "Pealkiri"
+
+msgid "Cost"
+msgstr "Hind"
+
+msgid "Free from"
+msgstr "Tasuta alates"
+
+msgid "Free shipping when the cart total (after discounts) is at least this amount. Empty or 0 disables."
+msgstr "Tasuta transport, kui ostukorvi summa (pärast allahindlusi) on vähemalt see. Tühi või 0 lülitab välja."
+
+msgid "Tax status"
+msgstr "Maksustatus"
+
+msgid "— Choose a parcel machine —"
+msgstr "— Vali pakiautomaat —"
+
+msgid "Please choose a parcel machine."
+msgstr "Palun vali pakiautomaat."
+
+msgid "Omniva parcel machine"
+msgstr "Omniva pakiautomaat"
+
+msgid "SmartPost parcel machine"
+msgstr "SmartPost pakiautomaat"
