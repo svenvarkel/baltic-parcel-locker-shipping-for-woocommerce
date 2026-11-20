@@ -3,7 +3,7 @@
  * Plugin Name:       Baltic Parcel Locker Shipping for WooCommerce
  * Plugin URI:        https://github.com/svenvarkel/baltic-parcel-locker-shipping-for-woocommerce
  * Description:       Omniva and SmartPost parcel machines: checkout picker, one-click shipments and printable labels.
- * Version:           0.1.0
+ * Version:           0.1.1
  * Requires at least: 6.5
  * Requires PHP:      8.1
  * Author:            Sven Varkel
@@ -16,8 +16,6 @@
  */
 
 defined( 'ABSPATH' ) || exit;
-
-const BPL_VERSION = '0.1.0';
 
 add_action( 'before_woocommerce_init', function () {
 	if ( class_exists( \Automattic\WooCommerce\Utilities\FeaturesUtil::class ) ) {

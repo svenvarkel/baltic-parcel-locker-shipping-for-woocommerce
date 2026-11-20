@@ -128,12 +128,8 @@ class BPL_Carriers {
 	 */
 	public static function parse_omniva_create( int $code, string $body ): array {
 		$j = json_decode( $body, true );
-		if ( $code <= 0 ) {
-			return array( $code < 0 ? 'failed' : 'unknown', '', '', $body );
-		}
-		if ( $code >= 300 ) {
-			// 5xx: carrier may have created it anyway → unknown blocks a duplicate re-create.
-			return array( $code < 400 || $code >= 500 ? 'unknown' : 'failed', '', '', self::error_text( $code, $j, $body ) );
+		if ( $code <= 0 || $code >= 300 ) {
+			return self::transport_state( $code, $j, $body );
 		}
 		if ( ! is_array( $j ) ) {
 			return array( 'unknown', '', '', 'Unparseable response: ' . mb_substr( $body, 0, 200 ) );
@@ -151,11 +147,8 @@ class BPL_Carriers {
 
 	public static function parse_smartpost_create( int $code, string $body ): array {
 		$j = json_decode( $body, true );
-		if ( $code <= 0 ) {
-			return array( $code < 0 ? 'failed' : 'unknown', '', '', $body );
-		}
-		if ( $code >= 300 ) {
-			return array( $code < 400 || $code >= 500 ? 'unknown' : 'failed', '', '', self::error_text( $code, $j, $body ) );
+		if ( $code <= 0 || $code >= 300 ) {
+			return self::transport_state( $code, $j, $body );
 		}
 		$item    = $j['orders']['item'][0] ?? ( $j['orders']['item'] ?? null );
 		$barcode = is_array( $item ) ? (string) ( $item['barcode'] ?? '' ) : '';
@@ -163,6 +156,17 @@ class BPL_Carriers {
 			return array( 'unknown', '', '', 'Unexpected response: ' . mb_substr( $body, 0, 200 ) );
 		}
 		return array( 'created', $barcode, (string) ( $item['sender']['doorcode'] ?? '' ), '' );
+	}
+
+	/**
+	 * Non-2xx outcome. Only a definite rejection (4xx, or -1 = never sent) is 'failed';
+	 * timeouts (0), 3xx and 5xx may have created the shipment anyway → 'unknown' blocks a duplicate.
+	 */
+	private static function transport_state( int $code, $j, string $body ): array {
+		if ( $code <= 0 ) {
+			return array( $code < 0 ? 'failed' : 'unknown', '', '', $body );
+		}
+		return array( $code >= 400 && $code < 500 ? 'failed' : 'unknown', '', '', self::error_text( $code, $j, $body ) );
 	}
 
 	private static function error_text( int $code, $j, string $body ): string {
@@ -191,7 +195,7 @@ class BPL_Carriers {
 		wc_get_logger()->error( $msg, array( 'source' => 'baltic-parcel-locker-shipping-for-woocommerce' ) );
 	}
 
-	/** wp_remote_request wrapper → [code, body, headers]. code 0 = timeout (maybe sent), -1 = other transport error. */
+	/** wp_remote_request wrapper → [code, body]. code 0 = timeout (maybe sent), -1 = other transport error. */
 	private static function http( string $method, string $url, array $headers = array(), ?string $body = null ): array {
 		// No redirects on POST: a redirected create could fail after the carrier accepted it.
 		$res = wp_remote_request( $url, array( 'method' => $method, 'timeout' => 20, 'headers' => $headers, 'body' => $body, 'redirection' => 'POST' === $method ? 0 : 5 ) );
@@ -199,14 +203,14 @@ class BPL_Carriers {
 			$msg = $res->get_error_message();
 			self::log( "$method $url: $msg" );
 			// Only DNS / connect failures (cURL 6, 7) prove the request was never sent; anything else may have reached the carrier → unknown.
-			return array( preg_match( '/cURL error (6|7):/', $msg ) ? -1 : 0, $msg, array() );
+			return array( preg_match( '/cURL error (6|7):/', $msg ) ? -1 : 0, $msg );
 		}
 		$code = (int) wp_remote_retrieve_response_code( $res );
 		$out  = (string) wp_remote_retrieve_body( $res );
 		if ( $code >= 300 ) {
 			self::log( "$method $url: HTTP $code " . mb_substr( $out, 0, 500 ) );
 		}
-		return array( $code, $out, wp_remote_retrieve_headers( $res ) );
+		return array( $code, $out );
 	}
 
 	/** Terminals for a carrier + country: [id => ['name' =>, 'city' =>]] sorted by city, name. */

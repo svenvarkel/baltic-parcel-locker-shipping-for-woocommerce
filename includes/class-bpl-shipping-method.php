@@ -104,14 +104,14 @@ abstract class BPL_Shipping_Method extends WC_Shipping_Method {
 		}
 	}
 
-	/** [method, terminal id, country, terminal] for the chosen bpl method, or null. */
+	/** ['method', 'id', 'country', 'terminal'] for the chosen bpl method, or null. */
 	private static function chosen( array $data ): ?array {
 		foreach ( (array) ( $data['shipping_method'] ?? array() ) as $rate_id ) {
 			$method = strtok( (string) $rate_id, ':' );
 			if ( isset( BPL_Carriers::COUNTRIES[ $method ] ) ) {
 				$id      = wc_clean( wp_unslash( $_POST['bpl_terminal'][ $method ] ?? '' ) ); // phpcs:ignore WordPress.Security.NonceVerification -- WC checkout nonce already verified.
 				$country = (string) ( ( $data['shipping_country'] ?? '' ) ?: WC()->customer->get_shipping_country() );
-				return array( $method, $id, $country, BPL_Carriers::terminals( $method, $country )[ $id ] ?? null );
+				return array( 'method' => $method, 'id' => $id, 'country' => $country, 'terminal' => BPL_Carriers::terminals( $method, $country )[ $id ] ?? null );
 			}
 		}
 		return null;
@@ -119,17 +119,17 @@ abstract class BPL_Shipping_Method extends WC_Shipping_Method {
 
 	public static function validate( $data, $errors ): void {
 		$c = self::chosen( $data );
-		if ( $c && ! $c[3] ) {
+		if ( $c && ! $c['terminal'] ) {
 			$errors->add( 'shipping', __( 'Please choose a parcel machine.', 'baltic-parcel-locker-shipping-for-woocommerce' ) );
 		}
 	}
 
 	public static function save( $order, $data ): void {
 		$c = self::chosen( $data );
-		if ( $c && $c[3] ) {
-			$order->update_meta_data( '_bpl_terminal_id', $c[1] );
-			$order->update_meta_data( '_bpl_terminal_name', $c[3]['name'] );
-			$order->update_meta_data( '_bpl_terminal_country', $c[2] );
+		if ( $c && $c['terminal'] ) {
+			$order->update_meta_data( '_bpl_terminal_id', $c['id'] );
+			$order->update_meta_data( '_bpl_terminal_name', $c['terminal']['name'] );
+			$order->update_meta_data( '_bpl_terminal_country', $c['country'] );
 		}
 	}
 

@@ -11,30 +11,8 @@ if ( 'local' !== wp_get_environment_type() && ! str_ends_with( (string) wp_parse
 	return;
 }
 
-/** Minimal valid one-page PDF with a line of text (xref offsets computed). */
-function bpl_mock_pdf( string $text ): string {
-	$text    = preg_replace( '/[^A-Za-z0-9 :._-]/', '', $text );
-	$stream  = "BT /F1 14 Tf 20 250 Td (MOCK LABEL $text) Tj ET";
-	$objects = array(
-		'<< /Type /Catalog /Pages 2 0 R >>',
-		'<< /Type /Pages /Kids [3 0 R] /Count 1 >>',
-		'<< /Type /Page /Parent 2 0 R /MediaBox [0 0 298 420] /Contents 4 0 R /Resources << /Font << /F1 5 0 R >> >> >>',
-		'<< /Length ' . strlen( $stream ) . " >>\nstream\n$stream\nendstream",
-		'<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>',
-	);
-	$pdf  = "%PDF-1.4\n";
-	$offs = array();
-	foreach ( $objects as $i => $obj ) {
-		$offs[] = strlen( $pdf );
-		$pdf   .= ( $i + 1 ) . " 0 obj\n$obj\nendobj\n";
-	}
-	$xref = strlen( $pdf );
-	$pdf .= 'xref' . "\n0 " . ( count( $objects ) + 1 ) . "\n0000000000 65535 f \n";
-	foreach ( $offs as $o ) {
-		$pdf .= sprintf( "%010d 00000 n \n", $o );
-	}
-	return $pdf . 'trailer << /Size ' . ( count( $objects ) + 1 ) . " /Root 1 0 R >>\nstartxref\n$xref\n%%EOF\n";
-}
+// Tiny valid one-page PDF ("MOCK LABEL").
+const BPL_MOCK_PDF_B64 = 'JVBERi0xLjQKMSAwIG9iago8PCAvVHlwZSAvQ2F0YWxvZyAvUGFnZXMgMiAwIFIgPj4KZW5kb2JqCjIgMCBvYmoKPDwgL1R5cGUgL1BhZ2VzIC9LaWRzIFszIDAgUl0gL0NvdW50IDEgPj4KZW5kb2JqCjMgMCBvYmoKPDwgL1R5cGUgL1BhZ2UgL1BhcmVudCAyIDAgUiAvTWVkaWFCb3ggWzAgMCAyOTggNDIwXSAvQ29udGVudHMgNCAwIFIgL1Jlc291cmNlcyA8PCAvRm9udCA8PCAvRjEgNSAwIFIgPj4gPj4gPj4KZW5kb2JqCjQgMCBvYmoKPDwgL0xlbmd0aCA0NyA+PgpzdHJlYW0KQlQgL0YxIDE0IFRmIDIwIDI1MCBUZCAoTU9DSyBMQUJFTCBsYWJlbCkgVGogRVQKZW5kc3RyZWFtCmVuZG9iago1IDAgb2JqCjw8IC9UeXBlIC9Gb250IC9TdWJ0eXBlIC9UeXBlMSAvQmFzZUZvbnQgL0hlbHZldGljYSA+PgplbmRvYmoKeHJlZgowIDYKMDAwMDAwMDAwMCA2NTUzNSBmIAowMDAwMDAwMDA5IDAwMDAwIG4gCjAwMDAwMDAwNTggMDAwMDAgbiAKMDAwMDAwMDExNSAwMDAwMCBuIAowMDAwMDAwMjQxIDAwMDAwIG4gCjAwMDAwMDAzMzggMDAwMDAgbiAKdHJhaWxlciA8PCAvU2l6ZSA2IC9Sb290IDEgMCBSID4+CnN0YXJ0eHJlZgo0MDgKJSVFT0YK';
 
 function bpl_mock_response( int $code, string $body, string $type = 'application/json' ): array {
 	return array(
@@ -88,7 +66,7 @@ add_filter( 'pre_http_request', function ( $pre, $args, $url ) {
 		$b = $req['barcodes'][0] ?? '';
 		$b = is_array( $b ) ? $b['barcode'] : $b;
 		return bpl_mock_response( 200, wp_json_encode( array(
-			'successAddressCards' => array( array( 'barcode' => $b, 'fileData' => base64_encode( bpl_mock_pdf( "Omniva $b" ) ) ) ),
+			'successAddressCards' => array( array( 'barcode' => $b, 'fileData' => BPL_MOCK_PDF_B64 ) ),
 			'failedAddressCards'  => array(),
 		) ) );
 	}
@@ -108,11 +86,11 @@ add_filter( 'pre_http_request', function ( $pre, $args, $url ) {
 		if ( 'smartpost_label_url' === $mode ) {
 			return bpl_mock_response( 200, wp_json_encode( array( 'url' => 'https://gateway.posti.fi/smartpost/mock-label.pdf?barcode=' . rawurlencode( $q['barcode'] ?? '' ) ) ) );
 		}
-		return bpl_mock_response( 200, bpl_mock_pdf( 'SmartPost ' . ( $q['barcode'] ?? '' ) ), 'application/pdf' );
+		return bpl_mock_response( 200, base64_decode( BPL_MOCK_PDF_B64 ), 'application/pdf' );
 	}
 	if ( str_ends_with( $path, '/mock-label.pdf' ) ) {
 		parse_str( (string) wp_parse_url( $url, PHP_URL_QUERY ), $q );
-		return bpl_mock_response( 200, bpl_mock_pdf( 'SmartPost URL ' . ( $q['barcode'] ?? '' ) ), 'application/pdf' );
+		return bpl_mock_response( 200, base64_decode( BPL_MOCK_PDF_B64 ), 'application/pdf' );
 	}
 	return bpl_mock_response( 404, '{"details":"Mock: unknown path"}' );
 }, 10, 3 );
