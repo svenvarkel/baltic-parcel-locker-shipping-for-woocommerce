@@ -63,7 +63,7 @@ class BPL_Settings {
 			) ),
 			$f( 'omniva_user', __( 'Username', 'baltic-parcel-locker-shipping-for-woocommerce' ) ),
 			$f( 'omniva_password', __( 'Password', 'baltic-parcel-locker-shipping-for-woocommerce' ), 'bpl_secret' ),
-			$f( 'omniva_customer', __( 'Customer code', 'baltic-parcel-locker-shipping-for-woocommerce' ) ),
+			$f( 'omniva_customer', __( 'Customer code', 'baltic-parcel-locker-shipping-for-woocommerce' ), 'text', array( 'desc' => __( 'Usually the same as the API username.', 'baltic-parcel-locker-shipping-for-woocommerce' ) ) ),
 			$yes_no( 'omniva_sms', __( 'Registration SMS', 'baltic-parcel-locker-shipping-for-woocommerce' ), __( 'Send a registration SMS to the sender (pakikood? — unverified)', 'baltic-parcel-locker-shipping-for-woocommerce' ) ),
 			array( 'type' => 'sectionend', 'id' => 'bpl_omniva_section' ),
 

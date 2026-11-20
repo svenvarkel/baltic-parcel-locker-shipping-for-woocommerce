@@ -24,7 +24,8 @@ and fixed before the first commit. Critique is welcome — open an issue.
 
 - WordPress 6.5+, WooCommerce 7.4+ (developed against WP 7.1 / WC 11.2), PHP 8.1+ with `sodium`
 - Classic (shortcode) checkout. The block checkout is **not** supported yet.
-- Omniva: business-customer contract + OMX API user/password + customer code (from your Omniva account manager).
+- Omniva: business-customer contract + OMX API user/password (from your Omniva account manager or business support).
+  The **customer code** is usually the same as the API username — it is not shown anywhere in Omniva self-service.
 - SmartPost: business postpaid account; API key from SmartPosti self-service → Settings (account owner only).
 
 ## Install

@@ -98,6 +98,9 @@ msgstr "Parool"
 msgid "Customer code"
 msgstr "Kliendikood"
 
+msgid "Usually the same as the API username."
+msgstr "Tavaliselt sama mis API kasutajanimi."
+
 msgid "Registration SMS"
 msgstr "Registreerimise SMS"
 
