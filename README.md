@@ -20,6 +20,9 @@ who set the goal and the constraints but did not write code. The implementation 
 diff were reviewed by a second model (OpenAI Codex); its findings were checked against the code
 and fixed before the first commit. Critique is welcome — open an issue.
 
+Every prompt the human typed, verbatim and timestamped: **[CASE-STUDY.md](CASE-STUDY.md)**
+(3 h 21 min from first prompt to production).
+
 ## Requirements
 
 - WordPress 6.5+, WooCommerce 7.4+ (developed against WP 7.1 / WC 11.2), PHP 8.1+ with `sodium`
