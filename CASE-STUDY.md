@@ -40,9 +40,9 @@ with a rollback script.
 >
 > Herald / BEsat OÜ kasutab neid WooCommerce'is pakkide saatmiseks.
 >
-> Probleem on puuduvates API võtmetes, mida ma püüan kusagilt leida / saada, aga see on nende firmade puhul tehtud erakordselt tüütuks ja keerulisek, sest need ei ole normaalsed startupid, vaid vanaaegsed puidust peldikud.
+> Probleem on puuduvates API võtmetes, mida ma püüan kusagilt leida / saada, aga see on nende firmade puhul tehtud erakordselt tüütuks ja keerulisek, sest need ei ole normaalsed startupid, vaid vanaaegsed p***** p*****.
 >
-> *OK, there's no old session to resume. Today's task: use Chrome (because they haven't published machine-readable docs!) to read the Omniva and SmartPosti API documentation and understand it. Herald / BEsat OÜ uses them in WooCommerce to ship parcels. The problem is the missing API keys, which I'm trying to obtain, but these companies make that extremely tedious, because they're not normal startups but old-fashioned wooden outhouses.*
+> *OK, there's no old session to resume. Today's task: use Chrome (because they haven't published machine-readable docs!) to read the Omniva and SmartPosti API documentation and understand it. Herald / BEsat OÜ uses them in WooCommerce to ship parcels. The problem is the missing API keys, which I'm trying to obtain, but these companies make that extremely tedious, because they're not normal startups but old-fashioned w***** o*****.*
 
 > **10:45** Võta aega kõikidele selle projektiga seotud tegevustele kulunud aega ka, palun! :)
 >
